@@ -1,34 +1,35 @@
-import styles from "./Navbar.module.css";
-import React, { useState } from "react";
-import logo from "../../assests/images/medify-Logo.png";
-const Navbar=()=>{
-    const [open,setOpen]=useState(false);
-    return(
-        <div className={styles.container}>
-            <h3 className={styles.textDisplay}> The health and well-being of our patients and their health care team will always be our priority, so we follow the best practices for cleanliness.</h3>   
-                <div className={styles.navbar}>
+import React from 'react'
+import "./NavBar.css"
+import logo from '../../assests/logo.jpg'
+import { Link } from 'react-router-dom'
 
-                    <a href="/"> 
-                        <img src={logo} alt="Medify Logo" className={styles.logo} />
-                    </a>
-                 <div className={`${styles.menu} ${open ? styles.active : ""}`}>
-                    <a href="/" className={styles.navLink} onClick={() => setOpen(false)}>Find Doctors</a>
-                    <a href="/" className={styles.navLink} onClick={() => setOpen(false)}>Hospitals</a>
-                    <a href="/" className={styles.navLink} onClick={() => setOpen(false)}>Medicines</a>
-                    <a href="/" className={styles.navLink} onClick={() => setOpen(false)}>Software for Provider</a>
-                    <a href="/" className={styles.navLink} onClick={() => setOpen(false)}>Facilities</a>
-                </div>
-                    <div className={styles.rightSection}>
-                        <button className={styles.loginButton}>My Bookings</button>
-                    </div>
-
-                     <div className={styles.hamburger} onClick={() => setOpen(!open)}>
-                        ☰
-                    </div>
-                    
-
-                </div>
+function NavBar() {
+  return (
+    <>
+        <h3 className='top-bar'>The health and well-being of our patients and their health care will always be our priority, so we follow the best practice for cleanliness.</h3>
+        <div className='navbar'>
+            <Link to="/" className='logo-link'>
+                <img src={logo} alt="Medify Logo" className="logo" />
+            </Link>
+           <div className='nav-links'>
+                <Link to="/" className='nav-item'>
+                    Find Doctors
+                </Link>
+                <Link to="/" className='nav-item'>
+                    Hospitals
+                </Link>
+                <Link to="/" className='nav-item'>
+                  Surgeries
+                </Link>
+                <Link to="/" className='nav-item'>
+                    Software for Provider
+                </Link>
+                <Link to="/my-bookings" className='nav-item'>
+                    <button className='booking-btn'>My Bookings</button>
+                </Link>
+           </div>
         </div>
-    )
+    </>
+  )
 }
-export default Navbar;
+export default NavBar
