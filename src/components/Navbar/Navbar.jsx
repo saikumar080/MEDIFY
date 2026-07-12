@@ -1,4 +1,4 @@
-import styles from "./NavBar.module.css";
+import styles from "./Navbar.module.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import logo from "../../assests/images/medify-Logo.png";
