@@ -1,0 +1,31 @@
+.searchBox{
+    width:85%;
+    background:white;
+    box-shadow:0 10px 20px rgba(0,0,0,.08);
+    border-radius:15px;
+    gap: 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:25px;
+
+    margin:auto;
+    margin-top:40px;
+}
+
+.searchBox select{
+    width:250px;
+    height:50px;
+    border-radius:8px;
+    border:1px solid #ddd;
+    padding:10px;
+}
+
+.searchBox button{
+    background:#2AA7FF;
+    color:white;
+    border:none;
+    padding:14px 28px;
+    border-radius:8px;
+}

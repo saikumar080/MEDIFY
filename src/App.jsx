@@ -1,20 +1,11 @@
-import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router';
-import './App.css';
-import HomePage from './Pages/Home/Home';
-import HospitalDetails from './Pages/Search/HospitalDetails';
-import MyBookings from './Pages/MyBookings/MyBookings';
-
+import Home from "./pages/Home/Home";
+import { Routes, Route } from "react-router-dom";
 function App() {
-  return (
-    <BrowserRouter>
-    <Routes>
-    <Route path='/' element={<HomePage />} />
-    <Route path='/hospital/:id'element={<HospitalDetails />} />
-    <Route path='my-bookings' element={<MyBookings />} />
-    </Routes>
-    </BrowserRouter>
-  );
+ return(
+  <Routes>
+    <Route path="/" element={<Home />} />
+  </Routes>
+ )
 }
 
 export default App;

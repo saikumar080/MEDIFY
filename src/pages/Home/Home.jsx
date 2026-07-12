@@ -1,10 +1,11 @@
 import React from 'react'
-import NavBar from '../../components/NavBar/NavBar';
-
+import Navbar from '../../components/Navbar/NavBar'
+import HeroSection from '../../components/HeroSection/HeroSection';
 function HomePage() {
   return (
     <div className={"home-page"}>
-        <NavBar />
+        <Navbar />
+        <HeroSection />
     </div>
   )
 }

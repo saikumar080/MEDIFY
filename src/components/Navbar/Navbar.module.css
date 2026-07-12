@@ -1,20 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-.textDisplay {
-    /* Add your text display styles here */
-    text-align: center;
-    color: white;
-    background-color:  #2AA7FF;
-    font-family: 'Poppins', sans-serif;
-
+.topBar{
+    background:#2AA7FF;
+    color:#fff;
+    height:40px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:14px;
+    font-family:'Poppins',sans-serif;
 }
-.navbar {
-    /* Add your navbar styles here */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 48px;
-    
+
+.topBar p{
+    margin:0;
+}
+.navbar{
+    height:80px;
+    background:#E7F0FF;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 80px;
+    position:relative;
 }
 .menu{
     display: flex;
@@ -26,32 +33,10 @@
     font-size: 26px;
     cursor: pointer;
 }
-/* Mobile Styles */
-@media (max-width: 768px) {
 
-    .menu {
-        display: none;
-        position: absolute;
-        top: 70px;
-        left: 0;
-        width: 100%;
-        background-color: #f8f8f8;
-        flex-direction: column;
-        align-items: center;
-        padding: 20px 0;
-    }
-
-    .menu.active {
-        display: flex;
-    }
-
-    .hamburger {
-        display: block;
-    }
-}
 .navLink {
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 500;
     color: #102851;
     font-size: 16px;
     font-family: 'Poppins', sans-serif;
@@ -60,17 +45,26 @@
     color: #2AA7FF;
 }
 
-.loginButton {
-    padding: 8px 16px;
-    background-color: #2AA7FF;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
+.bookingBtn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    width:130px;
+    height:42px;
+
+    background:#2AA7FF;
+    color:white;
+
+    border-radius:8px;
+
+    text-decoration:none;
+
+    font-size:14px;
+    font-weight:600;
 }
 
-.loginButton:hover {
+.bookingBtn:hover {
     background-color: #1b8ed6;
 }
 .logo{
@@ -82,4 +76,56 @@
 .logo:hover{
     transform: scale(1.05);
     transition: transform 0.3s ease;
+}
+
+/* ________Mobile Styles:::::::::::: */
+@media (max-width: 768px) {
+
+  .navbar {
+    padding: 0 20px;
+    height: 70px;
+    position: relative;
+  }
+
+  .hamburger {
+    display: block;
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 1001;
+  }
+
+  .menu {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+
+    display: none;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 20px;
+    padding: 20px;
+
+    background: #fff;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+
+  .show {
+    display: flex;
+  }
+
+  .navLink {
+    width: 100%;
+    text-align: center;
+    padding: 12px 0;
+  }
+
+  .bookingBtn {
+    width: 100%;
+    max-width: 220px;
+    text-align: center;
+  }
 }
