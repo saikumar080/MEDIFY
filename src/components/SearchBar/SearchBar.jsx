@@ -1,111 +1,156 @@
-import styles from './SearchBar.module.css'
-import { useState, useEffect} from 'react';
-import { useNavigate } from 'react-router-dom';
-import { getStates, getCities } from '../../services/api';
-import { FiSearch } from 'react-icons/fi';
-const SearchBar=()=>{
-    const navigate=useNavigate();
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { getStates, getCities } from "../../services/api";
 
-    const[states,setStates]=useState([]);
-    const[cities,setCities]=useState([]);
+import Stack from "@mui/material/Stack";
+import Paper from "@mui/material/Paper";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import SearchIcon from "@mui/icons-material/Search";
 
-    const[selectedState,setSelectedState]=useState("");
-    const[selectedCity,setSelectedCity]=useState("");
+import styles from "./SearchBar.module.css";
 
-    const[loading,setLoading]=useState(false);
-    const[loadingCities,setLoadingCities]=useState(false);
+const SearchBar = () => {
+  const navigate = useNavigate();
 
-    // ___________fetch states on component mount:::::
-    useEffect(()=>{
-        fetchStates();
-    },[]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
 
-    // ___________fetch states and cities from api:::::
-    const fetchStates=async()=>{
-        try{
-            setLoading(true);
-            // API call to fetch states
-            const data=await getStates(); 
-            setStates(data);
-        }catch(err){
-            console.error("Error fetching states:", err);
-        }finally{
-            setLoading(false);
-        }
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [loadingCities, setLoadingCities] = useState(false);
+
+  useEffect(() => {
+    fetchStates();
+  }, []);
+
+  const fetchStates = async () => {
+    try {
+      setLoading(true);
+      const data = await getStates();
+      setStates(data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    // ___________Handle state selection change:::::
-    const handleStateChange=async(e)=>{
-        const state=e.target.value;
-        setSelectedState(state);
-        setSelectedCity(""); // Reset selected city when state changes
-        setCities([]); // Clear cities when state changes
-        // Fetch cities for the selected state
+  const handleStateChange = async (event) => {
+    const state = event.target.value;
 
-        if(!state)return; // If no state is selected, do not fetch cities
-        try{
-            setLoadingCities(true);
-            const data=await getCities(state);
-            setCities(data);
-        }catch(err){
-            console.error("Error fetching cities:", err);
-        }finally{
-            setLoadingCities(false);
-        }
-    };
+    setSelectedState(state);
+    setSelectedCity("");
+    setCities([]);
 
-    // ___________Handle form submission:::::
-    const handleSubmit=(e)=>{
-        e.preventDefault();
-        // Perform search action with selectedState and selectedCity
-        if(!selectedState || !selectedCity)return;
-        navigate(`/search?state=${encodeURIComponent(selectedState)}&city=${encodeURIComponent(selectedCity)}`);
+    if (!state) return;
+
+    try {
+      setLoadingCities(true);
+      const data = await getCities(state);
+      setCities(data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoadingCities(false);
     }
-    
-    return(
-        <form className={styles.searchBox} onSubmit={handleSubmit}>
-            <div  className={styles.inputGroup}>
-                <label htmlFor="stateSelect">State</label>
-                <select id="stateSelect" value={selectedState} onChange={handleStateChange}>
-                    <option value="">Select State</option>
-                    {states.map((state)=>(
-                        <option key={state} value={state}>
-                            {state}
-                        </option>
-                    ))}
-                </select>
-                
-            </div>
+  };
 
-            <div  className={styles.inputGroup}>
-                <label htmlFor="citySelect">City</label>
-                <select id="citySelect" value={selectedCity} onChange={(e) => setSelectedCity(e.target.value)} disabled={!selectedState || loadingCities}>
-                    <option value="">{loadingCities ? "Loading..." : "Select City"}</option>
-                    {cities.map((city)=>(
-                        <option key={city} value={city}>
-                            {city}
-                        </option>
-                    ))}
-                </select>
-            </div>
-            <button
-                type="submit"
-                className={styles.searchBtn}
-                disabled={loading || loadingCities || !selectedState || !selectedCity}
-                >
-                {loading ? (
-                    <>
-                    <span className={styles.spinner}></span>
-                    Loading...
-                    </>
-                ) : (
-                    <>
-                    <FiSearch />
-                    Search
-                    </>
-                )}
-                </button>
-        </form>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!selectedState || !selectedCity) return;
+
+    navigate(
+      `/search?state=${encodeURIComponent(
+        selectedState
+      )}&city=${encodeURIComponent(selectedCity)}`
     );
-}
-export default SearchBar
+  };
+
+  return (
+     <Paper
+    component="form"
+    onSubmit={handleSubmit}
+    className={styles.searchBox}
+    elevation={4}
+  >
+    <Stack
+  direction={{ xs: "column", md: "row" }}
+  spacing={2}
+  alignItems={{ xs: "stretch", md: "flex-end" }}
+>
+  <FormControl fullWidth>
+    <InputLabel>State</InputLabel>
+
+    <Select
+      value={selectedState}
+      label="State"
+      onChange={handleStateChange}
+    >
+      {states.map((state) => (
+        <MenuItem key={state} value={state}>
+          {state}
+        </MenuItem>
+      ))}
+    </Select>
+  </FormControl>
+
+  <FormControl
+    fullWidth
+    disabled={!selectedState || loadingCities}
+  >
+    <InputLabel>City</InputLabel>
+
+    <Select
+      value={selectedCity}
+      label="City"
+      onChange={(e) => setSelectedCity(e.target.value)}
+    >
+      {cities.map((city) => (
+        <MenuItem key={city} value={city}>
+          {city}
+        </MenuItem>
+      ))}
+    </Select>
+  </FormControl>
+
+  <Button
+    variant="contained"
+    size="large"
+    type="submit"
+    disabled={
+      loading ||
+      loadingCities ||
+      !selectedState ||
+      !selectedCity
+    }
+    startIcon={
+      loading ? (
+        <CircularProgress size={20} color="inherit" />
+      ) : (
+        <SearchIcon />
+      )
+    }
+    sx={{
+      minWidth: 170,
+      height: 56,
+      borderRadius: 2,
+      textTransform: "none",
+      fontWeight: 600,
+    }}
+  >
+    {loading ? "Loading..." : "Search"}
+  </Button>
+</Stack>
+</Paper>
+  );
+};
+
+export default SearchBar;
