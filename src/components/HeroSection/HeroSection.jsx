@@ -16,20 +16,22 @@ const HeroSection = () => {
 
       <Box
         sx={{
+          position:"relative",
           background: "linear-gradient(180deg,#E7F0FF 0%,#F8FBFF 100%)",
           pt: { xs: 6, md: 8 },
-          pb: { xs: 10, md: 18 },
+          pb: { xs: 3, md: 12 },
         }}
       >
         <Container maxWidth="xl">
           <Stack
             direction={{ xs: "column", md: "row" }}
-            spacing={{ xs: 6, md: 4 }}
+            spacing={{ xs: 0.5, md: 4 }}
             alignItems="center"
+            sx={{minHeight:{md:500}}}
           >
             {/* Left */}
 
-            <Box flex={1}>
+            <Box sx={{flex:0.9, pl:{xs:0,md:4,lg:6}}}>
               <Typography
                 variant="h6"
                 sx={{
@@ -81,9 +83,7 @@ const HeroSection = () => {
             {/* Right */}
 
             <Box
-              flex={1}
-              display="flex"
-              justifyContent="center"
+              sx={{ flex:1.1, display:"flex",justifyContent:"center", alignItems:"flex-end"}}
             >
               <Box
                 component="img"
@@ -92,20 +92,22 @@ const HeroSection = () => {
                 sx={{
                   width: "100%",
                   maxWidth: {
-                    xs: 320,
-                    sm: 420,
-                    md: 520,
+                    xs: 340,
+                    sm: 450,
+                    md: 600,
                   },
+                  mb:{xs:-2, md:0}
                 }}
               />
             </Box>
           </Stack>
         </Container>
+         {/* Search */}
+        <Container maxWidth="xl" sx={{position:"relative"}}>
+          <SearchBar />
+        </Container>
+      
       </Box>
-
-      {/* Search */}
-
-      <SearchBar />
     </>
   );
 };

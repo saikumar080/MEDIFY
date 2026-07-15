@@ -11,8 +11,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import SearchIcon from "@mui/icons-material/Search";
-
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import styles from "./SearchBar.module.css";
+import { InputAdornment, OutlinedInput } from "@mui/material";
 
 const SearchBar = () => {
   const navigate = useNavigate();
@@ -78,7 +79,7 @@ const SearchBar = () => {
      <Paper
     component="form"
     onSubmit={handleSubmit}
-    className={styles.searchBox}
+    sx={{position:{xs:"static",md:"absolute"}, left:{md:"50%"}, bottom:-45, transform:{md: "translateX(-50%)"}, width:{xs:"100%",md:"86%"},mx:"auto",mt:{xs:1.5,sm:2, md:0}, p:3, borderRadius:4, zIndex:10}}
     elevation={4}
   >
     <Stack
@@ -87,12 +88,22 @@ const SearchBar = () => {
   alignItems={{ xs: "stretch", md: "flex-end" }}
 >
   <FormControl fullWidth>
-    <InputLabel>State</InputLabel>
+    <InputLabel> State</InputLabel>
 
     <Select
       value={selectedState}
       label="State"
       onChange={handleStateChange}
+      input={
+        <OutlinedInput 
+          startAdornment={
+            <InputAdornment position="start">
+              <LocationOnOutlinedIcon color="action" />
+            </InputAdornment>
+          }
+         label="State"/>
+      }
+      
     >
       {states.map((state) => (
         <MenuItem key={state} value={state}>
@@ -112,6 +123,15 @@ const SearchBar = () => {
       value={selectedCity}
       label="City"
       onChange={(e) => setSelectedCity(e.target.value)}
+      input={
+        <OutlinedInput 
+          startAdornment={
+            <InputAdornment position="start">
+              <LocationOnOutlinedIcon color="action" />
+            </InputAdornment>
+          }
+         label="City"/>
+      }
     >
       {cities.map((city) => (
         <MenuItem key={city} value={city}>
@@ -125,19 +145,14 @@ const SearchBar = () => {
     variant="contained"
     size="large"
     type="submit"
+
     disabled={
       loading ||
       loadingCities ||
       !selectedState ||
       !selectedCity
     }
-    startIcon={
-      loading ? (
-        <CircularProgress size={20} color="inherit" />
-      ) : (
-        <SearchIcon />
-      )
-    }
+    startIcon={<SearchIcon/>}
     sx={{
       minWidth: 170,
       height: 56,
@@ -146,7 +161,7 @@ const SearchBar = () => {
       fontWeight: 600,
     }}
   >
-    {loading ? "Loading..." : "Search"}
+    Search
   </Button>
 </Stack>
 </Paper>

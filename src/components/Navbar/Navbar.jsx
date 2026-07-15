@@ -56,7 +56,8 @@ const Navbar = () => {
         elevation={0}
         color="transparent"
         sx={{
-          bgcolor: "background.paper",
+          bgcolor: "primary.light",
+          borderRadius:0,
         }}
       >
         <Container maxWidth="xl">
