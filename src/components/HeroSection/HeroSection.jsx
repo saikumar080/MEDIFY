@@ -24,10 +24,10 @@ const HeroSection = () => {
       >
         <Container maxWidth="xl">
           <Stack
-            direction={{ xs: "column", md: "row" }}
-            spacing={{ xs: 0.5, md: 4 }}
+            direction={{ xs: "column", lg: "row" }}
+            spacing={{ xs: 1, md: 4 }}
             alignItems="center"
-            sx={{minHeight:{md:500}}}
+            sx={{minHeight:{lg:500}}}
           >
             {/* Left */}
 
@@ -96,7 +96,7 @@ const HeroSection = () => {
                     sm: 450,
                     md: 600,
                   },
-                  mb:{xs:-2, md:0}
+                  mb:{xs:-2, lg:20}
                 }}
               />
             </Box>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getStates, getCities } from "../../services/api";
-
+import Box from "@mui/material/Box"
 import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
 import FormControl from "@mui/material/FormControl";
@@ -9,11 +9,15 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
-import CircularProgress from "@mui/material/CircularProgress";
 import SearchIcon from "@mui/icons-material/Search";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import styles from "./SearchBar.module.css";
-import { InputAdornment, OutlinedInput } from "@mui/material";
+import { InputAdornment, OutlinedInput, Typography } from "@mui/material";
+import CategoryCard from "../CategoryCard/CategoryCard";
+import  doctorIcon from "../../assests/icons/doctors-icon.png";
+import labIcon from "../../assests/icons/labs-icon.png";
+import hospitalIcon from "../../assests/icons/hospital-icon.png";
+import medicineIcon from "../../assests/icons/medical-icon.png";
+import ambulanceIcon from "../../assests/icons/ambulance-icon.png"
 
 const SearchBar = () => {
   const navigate = useNavigate();
@@ -76,95 +80,124 @@ const SearchBar = () => {
   };
 
   return (
+    <>
      <Paper
-    component="form"
-    onSubmit={handleSubmit}
-    sx={{position:{xs:"static",md:"absolute"}, left:{md:"50%"}, bottom:-45, transform:{md: "translateX(-50%)"}, width:{xs:"100%",md:"86%"},mx:"auto",mt:{xs:1.5,sm:2, md:0}, p:3, borderRadius:4, zIndex:10}}
-    elevation={4}
-  >
-    <Stack
-  direction={{ xs: "column", md: "row" }}
-  spacing={2}
-  alignItems={{ xs: "stretch", md: "flex-end" }}
->
-  <FormControl fullWidth>
-    <InputLabel> State</InputLabel>
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{position:{xs:"static",lg:"absolute"}, left:{md:"50%"}, bottom:-45, transform:{lg: "translateX(-50%)"}, width:{xs:"100%",lg:"86%"},mx:"auto",mt:{xs:1.5,sm:2, md:0}, p:3, borderRadius:4, zIndex:10}}
+        elevation={4}
+      >
+      <Stack
+        direction={{ xs: "column", md: "row" }}
+        spacing={2}
+        alignItems={{ xs: "stretch", md: "flex-end" }}
+      >
+        <Box id="state" sx={{flex:0.5}}>
+            <FormControl fullWidth>
+            <InputLabel> State</InputLabel>
 
-    <Select
-      value={selectedState}
-      label="State"
-      onChange={handleStateChange}
-      input={
-        <OutlinedInput 
-          startAdornment={
-            <InputAdornment position="start">
-              <LocationOnOutlinedIcon color="action" />
-            </InputAdornment>
+            <Select
+              value={selectedState}
+              label="State"
+              onChange={handleStateChange}
+              input={
+                <OutlinedInput 
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <LocationOnOutlinedIcon color="action" />
+                    </InputAdornment>
+                  }
+                label="State"/>
+              }
+              
+            >
+              {loading ? (
+                <MenuItem disabled> Loading ...</MenuItem>
+              ):(
+                states.map((state) => (
+                <MenuItem key={state} value={state}>
+                  {state}
+                </MenuItem>
+              ))
+              )}
+            </Select>
+          </FormControl>
+        </Box>
+
+        <Box id="city" sx={{flex:0.5}}>
+          <FormControl
+            fullWidth
+          disabled={!selectedState || loadingCities}
+          >
+            <InputLabel>City</InputLabel>
+
+            <Select
+              value={selectedCity}
+              label="City"
+              onChange={(e) => setSelectedCity(e.target.value)}
+              input={
+                <OutlinedInput 
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <LocationOnOutlinedIcon color="action" />
+                    </InputAdornment>
+                  }
+                label="City"/>
+              }
+            >
+              {loading ?(
+                <MenuItem disabled>Loading...</MenuItem>
+              ):(
+                cities.map((city) => (
+                <MenuItem key={city} value={city}>
+                  {city}
+                </MenuItem>
+              ))
+              )}
+            </Select>
+          </FormControl>
+        </Box>
+        <Button
+          id="searchBtn"
+          variant="contained"
+          size="large"
+          type="submit"
+
+          disabled={
+            loadingCities ||
+            !selectedState ||
+            !selectedCity
           }
-         label="State"/>
-      }
-      
-    >
-      {states.map((state) => (
-        <MenuItem key={state} value={state}>
-          {state}
-        </MenuItem>
-      ))}
-    </Select>
-  </FormControl>
+          startIcon={<SearchIcon/>}
+          sx={{
+            minWidth:{xs:"100%", md:160,lg:180},
+            height: 56,
+            borderRadius: 2,
+            textTransform: "none",
+            fontWeight: 600,
+          }}
+        >
+          Search
+        </Button>
+      </Stack>
+      <Box sx={{mt:5}}>
+       <Typography align="center" variant="h4" color="text.primary" sx={{mb:4}}>You may be looking  for</Typography>
 
-  <FormControl
-    fullWidth
-    disabled={!selectedState || loadingCities}
-  >
-    <InputLabel>City</InputLabel>
-
-    <Select
-      value={selectedCity}
-      label="City"
-      onChange={(e) => setSelectedCity(e.target.value)}
-      input={
-        <OutlinedInput 
-          startAdornment={
-            <InputAdornment position="start">
-              <LocationOnOutlinedIcon color="action" />
-            </InputAdornment>
-          }
-         label="City"/>
-      }
-    >
-      {cities.map((city) => (
-        <MenuItem key={city} value={city}>
-          {city}
-        </MenuItem>
-      ))}
-    </Select>
-  </FormControl>
-
-  <Button
-    variant="contained"
-    size="large"
-    type="submit"
-
-    disabled={
-      loading ||
-      loadingCities ||
-      !selectedState ||
-      !selectedCity
-    }
-    startIcon={<SearchIcon/>}
-    sx={{
-      minWidth: 170,
-      height: 56,
-      borderRadius: 2,
-      textTransform: "none",
-      fontWeight: 600,
-    }}
-  >
-    Search
-  </Button>
-</Stack>
-</Paper>
+       <Box sx={{display:"grid",gap:2, mt:4, gridTemplateColumns:{xs:"repeat(2,1fr)", sm:"repeat(3,1fr)",md:"repeat(5, 1fr)"},}}> 
+          {/* Doctors Icon */}
+          <CategoryCard icon={doctorIcon} title="Doctors" />
+          {/* Lab ICon */}
+          <CategoryCard  icon={labIcon} title="Labs" />
+          {/* Hospital  ICon  */}
+          <CategoryCard  icon={hospitalIcon} title="Hospitals" active />
+          {/* Medical Store Icon */}
+          <CategoryCard  icon={medicineIcon} title="Medical Store"/>
+          {/* Ambulance  Icon */}
+          <CategoryCard icon={ambulanceIcon} title="Ambulance" />
+       </Box>
+      </Box>
+  </Paper>
+</>
   );
 };
 
