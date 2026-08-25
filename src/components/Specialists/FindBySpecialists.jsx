@@ -9,7 +9,7 @@ import cardiology from "../../assests/icons/Heart Rate.png";
 import mriResonance from "../../assests/icons/Heart Rate Monitor.png";
 import piscologist from "../../assests/icons/Immune.png";
 import labIcon from "../../assests/icons/labs-icon.png";
-import xrayIcon from "../../assests/icons/x-ray.png";
+import xRayIcon from "../../assests/icons/x-ray.png";
 import bloodTest from "../../assests/icons/Blood Sample.png";
 
 const FindBySpecialists = () => {
@@ -45,7 +45,7 @@ const FindBySpecialists = () => {
       title: "Laboratory",
     },
     {
-      icon: xrayIcon,
+      icon: xRayIcon,
       title: "X-ray",
     },
   ];
