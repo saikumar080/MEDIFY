@@ -11,7 +11,7 @@ import doctor1 from "../../assests/images/medical-1.png";
 import doctor2 from "../../assests/images/medical-2.png";
 import doctor3 from "../../assests/images/medical-3.png";
 import doctor4 from "../../assests/images/medical-4.png";
-import doctor5 from "../../assests/images/medical-5.png";
+import doctor5 from "../../assests/images/Medical-5.png";
 
 const doctors = [
   {
