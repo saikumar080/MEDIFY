@@ -53,3 +53,4 @@ export const getHospitals=async(state,city)=>{
     );
     return response.data;
 }
+

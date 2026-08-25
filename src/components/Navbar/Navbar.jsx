@@ -56,7 +56,6 @@ const Navbar = () => {
         elevation={0}
         color="transparent"
         sx={{
-          bgcolor: "primary.light",
           borderRadius:0,
         }}
       >

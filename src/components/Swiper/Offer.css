@@ -1,0 +1,25 @@
+.offerSwiperWrapper {
+  width: 1200px;
+  height: 300px;
+  margin: 30px auto;
+}
+
+.offerSwiper {
+  width: 100%;
+  height: 100%;
+}
+
+.offerSwiper .swiper-slide {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.offerSwiper .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+}
