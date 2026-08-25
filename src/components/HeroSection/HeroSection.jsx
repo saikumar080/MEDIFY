@@ -40,7 +40,7 @@ const HeroSection = () => {
                   mb: 2,
                 }}
               >
-                Skip the travel! Find Online Doctors
+                Skip the travel! Find Online 
               </Typography>
 
               <Typography

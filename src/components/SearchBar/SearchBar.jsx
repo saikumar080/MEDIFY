@@ -84,7 +84,7 @@ const SearchBar = () => {
      <Paper
         component="form"
         onSubmit={handleSubmit}
-        sx={{position:{xs:"static",lg:"absolute"}, left:{md:"50%"}, bottom:-45, transform:{lg: "translateX(-50%)"}, width:{xs:"100%",lg:"86%"},mx:"auto",mt:{xs:1.5,sm:2, md:0}, p:3, borderRadius:4, zIndex:10}}
+        sx={{position:{xs:"static",lg:"absolute"}, left:{md:"50%"}, bottom:-40, transform:{lg: "translateX(-50%)"}, width:{xs:"100%",lg:"86%"},mx:"auto",mt:{xs:1.5,sm:2, md:0}, p:3, borderRadius:4, zIndex:10}}
         elevation={4}
       >
       <Stack
@@ -115,7 +115,7 @@ const SearchBar = () => {
                 <MenuItem disabled> Loading ...</MenuItem>
               ):(
                 states.map((state) => (
-                <MenuItem key={state} value={state}>
+                <MenuItem key={state} value={state} sx={{ fontSize: { xs: 12, sm: 13, md: 14 }, fontWeight: 500 }}>
                   {state}
                 </MenuItem>
               ))
@@ -149,7 +149,7 @@ const SearchBar = () => {
                 <MenuItem disabled>Loading...</MenuItem>
               ):(
                 cities.map((city) => (
-                <MenuItem key={city} value={city}>
+                <MenuItem key={city} value={city} sx={{ fontSize: { xs: 12, sm: 13, md: 14 }, fontWeight: 500 }}>
                   {city}
                 </MenuItem>
               ))

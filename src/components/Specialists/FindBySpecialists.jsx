@@ -66,10 +66,11 @@ const FindBySpecialists = () => {
       {/* Heading */}
       <Typography
         align="center"
-        variant="h4"
+        variant="h2"
         color="text.primary"
         sx={{
           mb: 4,
+          fontWeight: 600,
         }}
       >
         Find By Specialisation
@@ -77,44 +78,50 @@ const FindBySpecialists = () => {
 
       {/* Cards */}
       <Box
-        sx={{
-          display: "grid",
-          gap: 2,
-          mt: 4,
+  sx={{
+    display: "grid",
 
-          gridTemplateColumns: {
-            xs: "repeat(2, 1fr)",
-            sm: "repeat(3, 1fr)",
-            md: "repeat(4, 1fr)",
-          },
-        }}
-      >
-        {specialists.map((specialist, index) => (
-          <Box
-            key={specialist.title}
-            sx={{
-              // Mobile + tablet: show everything
-              display: {
-                xs: "block",
-                sm: "block",
+    gap: { xs: 2, sm: 3, md: 4 , lg:8},
+    mt: 3,
 
-                // Desktop:
-                // First 4 always visible
-                // Remaining cards depend on showAll
-                md:
-                  index < 4 || showAll
-                    ? "block"
-                    : "none",
-              },
-            }}
-          >
-            <CategoryCard
-              icon={specialist.icon}
-              title={specialist.title}
-            />
-          </Box>
-        ))}
-      </Box>
+    gridTemplateColumns: {
+      xs: "repeat(2, 140px)",
+      sm: "repeat(3, 150px)",
+      md: "repeat(4, 170px)",
+    },
+
+    justifyContent: "center",
+  }}
+>
+  {specialists.map((specialist, index) => (
+    <Box
+      key={specialist.title}
+      variant="body1"
+      sx={{
+        display: {
+          xs: "block",
+          sm: "block",
+          md: index < 4 || showAll ? "block" : "none",
+
+        },
+        transition: "all 0.3s ease-in-out",
+        fontSize: {
+          xs: 12,
+          sm: 13,
+          md: 14,
+        },
+        fontWeight: 600,
+        
+
+      }}
+    >
+      <CategoryCard
+        icon={specialist.icon}
+        title={specialist.title}
+      />
+    </Box>
+  ))}
+</Box>
 
       {/* View All / View Less */}
       <Box
@@ -137,7 +144,7 @@ const FindBySpecialists = () => {
           onClick={() => setShowAll(!showAll)}
           sx={{
             textTransform: "none",
-            px: 4,
+            px: 2,
             py: 1,
           }}
         >

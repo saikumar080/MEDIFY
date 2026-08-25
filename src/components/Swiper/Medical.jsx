@@ -11,7 +11,7 @@ import doctor1 from "../../assests/images/medical-1.png";
 import doctor2 from "../../assests/images/medical-2.png";
 import doctor3 from "../../assests/images/medical-3.png";
 import doctor4 from "../../assests/images/medical-4.png";
-import doctor5 from "../../assests/images/Medical-5.png";
+import doctor5 from "../../assests/images/medical-5.png";
 
 const doctors = [
   {
@@ -49,9 +49,6 @@ const MedicalSwiper = () => {
         overflow: "hidden",
         py: 4,
 
-        // =========================
-        // PAGINATION DOTS
-        // =========================
         "& .swiper-pagination": {
           position: "relative",
           bottom: "auto",
@@ -74,10 +71,6 @@ const MedicalSwiper = () => {
     >
       <Container maxWidth="xl">
 
-        {/* =========================
-            HEADING
-        ========================= */}
-
         <Typography
           component="h2"
           align="center"
@@ -98,10 +91,6 @@ const MedicalSwiper = () => {
           Our Medical Specialists
         </Typography>
 
-        {/* =========================
-            SWIPER
-        ========================= */}
-
         <Swiper
           modules={[Pagination, Autoplay]}
           pagination={{
@@ -117,39 +106,33 @@ const MedicalSwiper = () => {
           spaceBetween={16}
           slidesPerView={1.2}
           breakpoints={{
-            // Mobile
             0: {
               slidesPerView: 1.2,
               spaceBetween: 12,
             },
 
-            // Tablet
             600: {
               slidesPerView: 2.5,
               spaceBetween: 14,
             },
 
-            // Small desktop
             900: {
               slidesPerView: 3.5,
               spaceBetween: 16,
             },
 
-            // Desktop
             1200: {
-              slidesPerView: 4.5,
-              spaceBetween: 16,
+              slidesPerView: 4,
+              spaceBetween: 24,
             },
           }}
           style={{
             width: "100%",
-            padding: "0 5px 10px",
+            padding: "0 5px 30px",
           }}
         >
-
           {doctors.map((doctor, index) => (
             <SwiperSlide key={index}>
-
               <Box
                 sx={{
                   width: "100%",
@@ -158,11 +141,6 @@ const MedicalSwiper = () => {
                   textAlign: "center",
                 }}
               >
-
-                {/* =========================
-                    DOCTOR IMAGE
-                ========================= */}
-
                 <Box
                   sx={{
                     position: "relative",
@@ -172,11 +150,8 @@ const MedicalSwiper = () => {
                       sm: 250,
                       md: 280,
                     },
-
                     overflow: "hidden",
-
                     borderRadius: "140px 140px 0 0",
-
                     bgcolor: "primary.main",
                   }}
                 >
@@ -194,15 +169,7 @@ const MedicalSwiper = () => {
                   />
                 </Box>
 
-                {/* =========================
-                    DOCTOR INFORMATION
-                ========================= */}
-
-                <Box
-                  sx={{
-                    py: 1.5,
-                  }}
-                >
+                <Box sx={{ py: 1.5 }}>
                   <Typography
                     sx={{
                       fontSize: {
@@ -230,12 +197,9 @@ const MedicalSwiper = () => {
                     {doctor.speciality}
                   </Typography>
                 </Box>
-
               </Box>
-
             </SwiperSlide>
           ))}
-
         </Swiper>
       </Container>
     </Box>
