@@ -6,6 +6,7 @@ import OfferSwiper from "../../components/Swiper/Offer";
 import FindBySpecialists from "../../components/Specialists/FindBySpecialists";
 import MedicalSwiper from "../../components/Swiper/Medical";
 import PatientCaring from "../../components/PatientCaring/PatientCaring";
+import Blog from "../../components/Blog&News/Blog";
 
 const HomePage = () => {
   return (
@@ -67,6 +68,16 @@ const HomePage = () => {
         }}
       >
         <PatientCaring />
+      </Box>
+
+      <Box
+        component="section"
+        sx={{
+          width: "100%",
+          py: { xs: 5, md: 6 },
+        }}
+      >
+        <Blog />
       </Box>
     </Box>
   );

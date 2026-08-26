@@ -61,7 +61,7 @@ const PatientCaring = () => {
 
             <Box
               component="img"
-              src={patientCaring2}
+              src={patientCaring}
               alt="Doctor caring for patient"
               sx={{
                 position: "absolute",
@@ -94,7 +94,7 @@ const PatientCaring = () => {
 
             <Box
               component="img"
-              src={patientCaring}
+              src={patientCaring2}
               alt="Doctors consulting"
               sx={{
                 position: "absolute",
