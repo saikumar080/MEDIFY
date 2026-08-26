@@ -7,6 +7,7 @@ import FindBySpecialists from "../../components/Specialists/FindBySpecialists";
 import MedicalSwiper from "../../components/Swiper/Medical";
 import PatientCaring from "../../components/PatientCaring/PatientCaring";
 import Blog from "../../components/Blog&News/Blog";
+import OurFamilies from "../../components/HospitalCard/HospitalCard";
 
 const HomePage = () => {
   return (
@@ -65,6 +66,7 @@ const HomePage = () => {
         sx={{
           width: "100%",
           py: { xs: 5, md: 6 },
+          bgcolor:"primary.light"
         }}
       >
         <PatientCaring />
@@ -78,6 +80,17 @@ const HomePage = () => {
         }}
       >
         <Blog />
+      </Box>
+
+      <Box
+        component="section"
+        sx={{
+          width: "100%",
+          py: { xs: 5, md: 6 },
+          bgcolor:"primary.light",
+        }}
+      >
+        <OurFamilies />
       </Box>
     </Box>
   );
