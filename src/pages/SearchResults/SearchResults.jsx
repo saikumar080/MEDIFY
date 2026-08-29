@@ -12,7 +12,10 @@ import { getHospitals } from "../../services/api";
 import MedicalCenterCard from "../../components/MedicalCenterCard/MedicalCenterCard";
 import Navbar from "../../components/Navbar/Navbar";
 import SearchBar from "../../components/SearchBar/SearchBar2";
-import Offer from "../../components/Swiper/Offer"
+import  FAQ from "../../components/FAQ/Faq";
+import DownloadApp from "../../components/DownloadApp/DownloadApp";
+import Footer from "../../components/Footer/Footer";
+
 const SearchResults = () => {
   const [searchParams] = useSearchParams();
 
@@ -80,8 +83,10 @@ return (
         borderRadius:1
       }}
     >
+      {/* Navbar */}
       <Navbar  />
 
+      {/* Search bar */}
       <Container maxWidth="lg" sx={{mt:2, mb:1, display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column",borderRadius:2}}>
         <SearchBar searchPage sx={{borderRadius:2}} />
       </Container>
@@ -144,6 +149,39 @@ return (
       )}
       {/* <Offer /> */}
     </Container>
+
+    {/* FAQ*/}
+     <Box
+        component="section"
+        sx={{
+          width: "100%",
+          py: { xs: 5, md: 6 },
+        }}
+      >
+        <FAQ />
+      </Box>
+
+      {/* Download APP */}
+      <Box
+              component="section"
+              sx={{
+                width: "100%",
+                py: { xs: 5, md: 6 },
+              }}
+            >
+              <DownloadApp />
+      </Box>
+
+      {/* Footer */}
+       <Box
+              component="section"
+              sx={{
+                width: "100%",
+                py: { xs: 5, md: 6 },
+              }}
+            >
+              <Footer />
+            </Box>
   </Box>
 );
 
