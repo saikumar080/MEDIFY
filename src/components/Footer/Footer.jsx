@@ -86,7 +86,7 @@ const Footer = () => {
               >
                 <Box component="img" src={logoIcon} alt="" sx={{ width: 18, height: 18 }} />
               </Box>
-              <Typography sx={{ fontSize: 22, fontWeight: 800, color: "#ffffff" }}>
+              <Typography sx={{ fontSize: 22, fontWeight: 800, color: "primary.main" }}>
                 Medify
               </Typography>
             </Stack>
@@ -100,13 +100,13 @@ const Footer = () => {
                   aria-label={label}
                   size="small"
                   sx={{
-                    bgcolor: "#ffffff",
+                    bgcolor: "background.default",
                     width: 34,
                     height: 34,
                     "&:hover": { bgcolor: "primary.light" },
                   }}
                 >
-                  <Icon sx={{ fontSize: 16, color: "#152B4E" }} />
+                  <Icon sx={{ fontSize: 16, color: "primary.main" }} />
                 </IconButton>
               ))}
             </Stack>

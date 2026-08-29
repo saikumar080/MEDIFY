@@ -4,18 +4,20 @@ import {
   Box,
   CircularProgress,
   Container,
+  Grid,
   Stack,
   Typography,
 } from "@mui/material";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import { getHospitals } from "../../services/api";
 import MedicalCenterCard from "../../components/MedicalCenterCard/MedicalCenterCard";
+import promoImage from "../../assests/images/Promo.png";
 import Navbar from "../../components/Navbar/Navbar";
 import SearchBar from "../../components/SearchBar/SearchBar2";
-import  FAQ from "../../components/FAQ/Faq";
+import FAQ from "../../components/FAQ/Faq";
 import DownloadApp from "../../components/DownloadApp/DownloadApp";
 import Footer from "../../components/Footer/Footer";
-
 const SearchResults = () => {
   const [searchParams] = useSearchParams();
 
@@ -68,123 +70,153 @@ const SearchResults = () => {
       </Box>
     );
   }
-return (
-  <Box
-    sx={{
-      minHeight: "100vh",
-      bgcolor: "background.default",
-    }}
-  >
-    {/* Navbar + SearchBar = ONE BLUE SECTION */}
+
+  return (
     <Box
       sx={{
-        bgcolor: "primary.main",
-        pb: { xs: 1, md: 2 },
-        borderRadius:1
+        minHeight: "100vh",
+        bgcolor: "background.default",
       }}
     >
-      {/* Navbar */}
-      <Navbar  />
-
-      {/* Search bar */}
-      <Container maxWidth="lg" sx={{mt:2, mb:1, display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column",borderRadius:2}}>
-        <SearchBar searchPage sx={{borderRadius:2}} />
-      </Container>
-    </Box>
-
-    {/* Search Results */}
-    <Container maxWidth="lg">
-      <Typography
-        component="h1"
-        variant="h1"
+      {/* Navbar + SearchBar = ONE BLUE SECTION */}
+      <Box
         sx={{
-          fontSize: { xs: 28, md: 36 },
-          mb: 1,
+          bgcolor: "primary.main",
+          pb: { xs: 1, md: 2 },
+          borderRadius: 1,
         }}
       >
-        {centers.length} medical centers available in {city}
-      </Typography>
+        {/* Navbar */}
+        <Navbar />
 
-      <Typography variant="body1" sx={{ mb: 4 }}>
-        Showing medical centers available in {city}, {state}
-      </Typography>
+        {/* Search bar */}
+        <Container
+          maxWidth="lg"
+          sx={{
+            mt: 2,
+            mb: 1,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            borderRadius: 2,
+          }}
+        >
+          <SearchBar searchPage sx={{ borderRadius: 2 }} />
+        </Container>
+      </Box>
 
-      {/* Error */}
-      {error && (
-        <Typography color="error" sx={{ mb: 3 }}>
-          {error}
+      {/* Search Results */}
+      <Container maxWidth="lg" sx={{ mt: 4 }}>
+        <Typography
+          component="h1"
+          variant="h1"
+          sx={{
+            fontSize: { xs: 24, md: 32 },
+            fontWeight: 700,
+            mb: 1,
+          }}
+        >
+          {centers.length} medical centers available in {city}
         </Typography>
-      )}
 
-      {/* Results */}
-      {centers.length > 0 ? (
-        <Stack spacing={3}>
-          {centers.map((center, index) => (
-            <MedicalCenterCard
-              key={center.id || index}
-              center={center}
-            />
-          ))}
+        <Stack
+          direction="row"
+          spacing={0.75}
+          alignItems="center"
+          sx={{ mb: 3 }}
+        >
+          <CheckCircleIcon sx={{ fontSize: 18, color: "text.secondary" }} />
+          <Typography variant="body2" color="text.secondary">
+            Book appointments with minimum wait-time & verified doctor
+            details
+          </Typography>
         </Stack>
-      ) : (
-        !error && (
-          <Box
+
+        {/* Error */}
+        {error && (
+          <Typography color="error" sx={{ mb: 3 }}>
+            {error}
+          </Typography>
+        )}
+
+        {/* Results + Promo layout */}
+        <Grid
+          container
+          spacing={3}
+          sx={{
+            mb: 4,
+            flexWrap: { xs: "wrap", lg: "nowrap" }, // force no-wrap at lg so promo can never drop below
+          }}
+        >
+          {/* Results column: full width until lg, then 9/12 beside promo */}
+          <Grid item xs={12} lg={9} sx={{ minWidth: 0 }}>
+            {centers.length > 0 ? (
+              <Stack spacing={2}>
+                {centers.map((center, index) => (
+                  <MedicalCenterCard
+                    key={center.id || index}
+                    center={center}
+                  />
+                ))}
+              </Stack>
+            ) : (
+              !error && (
+                <Box
+                  sx={{
+                    py: 8,
+                    textAlign: "center",
+                  }}
+                >
+                  <Typography variant="h3" sx={{ mb: 1 }}>
+                    No medical centers found
+                  </Typography>
+
+                  <Typography variant="body1">
+                    We couldn't find any medical centers in {city}.
+                  </Typography>
+                </Box>
+              )
+            )}
+          </Grid>
+
+          {/* Promo image sidebar: hidden below lg, aside on lg+, capped size */}
+          <Grid
+            item
+            xs={12}
+            lg={3}
             sx={{
-              py: 8,
-              textAlign: "center",
+              display: { xs: "none", lg: "block" },
+              flexShrink: 0, // never lets the flex layout squeeze/stretch it into wrapping
             }}
           >
-            <Typography
-              variant="h3"
-              sx={{ mb: 1 }}
-            >
-              No medical centers found
-            </Typography>
+            <Box
+              component="img"
+              src={promoImage}
+              alt="World Oral Health Day free appointment offer"
+              loading="lazy"
+              sx={{
+                width: "100%",
+                maxWidth: "100%",
+                maxHeight: 320, // caps it so it can't render oversized
+                borderRadius: 2,
+                position: "sticky",
+                top: 90,
+                objectFit: "cover",
+              }}
+            />
+          </Grid>
+        </Grid>
+      </Container>
 
-            <Typography variant="body1">
-              We couldn't find any medical centers in {city}.
-            </Typography>
-          </Box>
-        )
-      )}
-      {/* <Offer /> */}
-    </Container>
-
-    {/* FAQ*/}
-     <Box
-        component="section"
-        sx={{
-          width: "100%",
-          py: { xs: 5, md: 6 },
-        }}
-      >
-        <FAQ />
-      </Box>
-
+      {/* FAQ */}
+      <FAQ />
       {/* Download APP */}
-      <Box
-              component="section"
-              sx={{
-                width: "100%",
-                py: { xs: 5, md: 6 },
-              }}
-            >
-              <DownloadApp />
-      </Box>
-
+      <DownloadApp />
       {/* Footer */}
-       <Box
-              component="section"
-              sx={{
-                width: "100%",
-                py: { xs: 5, md: 6 },
-              }}
-            >
-              <Footer />
-            </Box>
-  </Box>
-);
-
+      <Footer />
+    </Box>
+  );
 };
 
 export default SearchResults;
