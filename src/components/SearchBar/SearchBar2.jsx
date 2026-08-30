@@ -1,19 +1,25 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getStates, getCities } from "../../services/api";
-import Box from "@mui/material/Box"
-import Stack from "@mui/material/Stack";
-import Paper from "@mui/material/Paper";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import Button from "@mui/material/Button";
+
+import {
+  Box,
+  Stack,
+  Paper,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Button,
+  InputAdornment,
+  OutlinedInput,
+} from "@mui/material";
+
 import SearchIcon from "@mui/icons-material/Search";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import { InputAdornment, OutlinedInput } from "@mui/material";
 
-const SearchBar = ({searchPage=false}) => {
+import { getStates, getCities } from "../../services/api";
+
+const SearchBar = ({ searchPage = false }) => {
   const navigate = useNavigate();
 
   const [states, setStates] = useState([]);
@@ -25,21 +31,32 @@ const SearchBar = ({searchPage=false}) => {
   const [loading, setLoading] = useState(false);
   const [loadingCities, setLoadingCities] = useState(false);
 
+  // =========================
+  // FETCH STATES
+  // =========================
+
   useEffect(() => {
+    const fetchStates = async () => {
+      try {
+        setLoading(true);
+
+        const data = await getStates();
+
+        setStates(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Error fetching states:", error);
+        setStates([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchStates();
   }, []);
 
-  const fetchStates = async () => {
-    try {
-      setLoading(true);
-      const data = await getStates();
-      setStates(data);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // =========================
+  // STATE CHANGE
+  // =========================
 
   const handleStateChange = async (event) => {
     const state = event.target.value;
@@ -48,23 +65,34 @@ const SearchBar = ({searchPage=false}) => {
     setSelectedCity("");
     setCities([]);
 
-    if (!state) return;
+    if (!state) {
+      return;
+    }
 
     try {
       setLoadingCities(true);
+
       const data = await getCities(state);
-      setCities(data);
-    } catch (err) {
-      console.log(err);
+
+      setCities(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error("Error fetching cities:", error);
+      setCities([]);
     } finally {
       setLoadingCities(false);
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // =========================
+  // SEARCH
+  // =========================
 
-    if (!selectedState || !selectedCity) return;
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (!selectedState || !selectedCity) {
+      return;
+    }
 
     navigate(
       `/search?state=${encodeURIComponent(
@@ -74,119 +102,206 @@ const SearchBar = ({searchPage=false}) => {
   };
 
   return (
-    <>
-     <Paper
-        component="form"
-        onSubmit={handleSubmit}
-        sx={{
-            position: searchPage ? "static" : {xs:"static", lg:"absolute"},
-            left: searchPage ? "auto" : { md: "50%" },
-            bottom: searchPage ? "auto" : -45,
-            transform: searchPage ? "none" : { lg: "translateX(-50%)" },
-            width: searchPage ? "100%" : { xs: "100%", lg: "86%" },
-            mx: "auto",
-            mt: searchPage ? 0 : { xs: 1.5, sm: 2, md: 0 },
-            p: 3,
-            borderRadius:  { xs: 4, sm: 4, md: 4 },
-            zIndex: 10
-        }}
-        elevation={4}
-      >
+    <Paper
+      component="form"
+      onSubmit={handleSubmit}
+      elevation={4}
+      sx={{
+        position: searchPage
+          ? "static"
+          : {
+              xs: "static",
+              lg: "absolute",
+            },
+
+        left: searchPage ? "auto" : { md: "50%" },
+
+        bottom: searchPage ? "auto" : -45,
+
+        transform: searchPage
+          ? "none"
+          : {
+              lg: "translateX(-50%)",
+            },
+
+        width: searchPage
+          ? "100%"
+          : {
+              xs: "100%",
+              lg: "86%",
+            },
+
+        mx: "auto",
+
+        mt: searchPage
+          ? 0
+          : {
+              xs: 1.5,
+              sm: 2,
+              md: 0,
+            },
+
+        p: {
+          xs: 2,
+          sm: 3,
+        },
+
+        borderRadius: 4,
+
+        zIndex: 10,
+      }}
+    >
       <Stack
-        direction={{ xs: "column", md: "row" }}
+        direction={{
+          xs: "column",
+          md: "row",
+        }}
         spacing={2}
-        alignItems={{ xs: "stretch", md: "flex-end" }}
+        alignItems={{
+          xs: "stretch",
+          md: "flex-end",
+        }}
       >
-        <Box id="state" sx={{flex:0.5}}>
-            <FormControl fullWidth>
-            <InputLabel> State</InputLabel>
+        {/* =========================
+            STATE
+        ========================= */}
+
+        <Box
+          id="state"
+          sx={{
+            flex: 1,
+          }}
+        >
+          <FormControl fullWidth>
+            <InputLabel id="state-label">State</InputLabel>
 
             <Select
+              labelId="state-label"
               value={selectedState}
               label="State"
               onChange={handleStateChange}
               input={
-                <OutlinedInput 
+                <OutlinedInput
+                  label="State"
                   startAdornment={
                     <InputAdornment position="start">
                       <LocationOnOutlinedIcon color="action" />
                     </InputAdornment>
                   }
-                label="State"/>
+                />
               }
-              
             >
               {loading ? (
-                <MenuItem disabled> Loading ...</MenuItem>
-              ):(
-                states.map((state) => (
-                <MenuItem key={state} value={state}>
-                  {state}
+                <MenuItem disabled>
+                  Loading...
                 </MenuItem>
-              ))
+              ) : states.length > 0 ? (
+                states.map((state) => (
+                  <MenuItem key={state} value={state}>
+                    {state}
+                  </MenuItem>
+                ))
+              ) : (
+                <MenuItem disabled>
+                  No states available
+                </MenuItem>
               )}
             </Select>
           </FormControl>
         </Box>
 
-        <Box id="city" sx={{flex:0.5}}>
+        {/* =========================
+            CITY
+        ========================= */}
+
+        <Box
+          id="city"
+          sx={{
+            flex: 1,
+          }}
+        >
           <FormControl
             fullWidth
-          disabled={!selectedState || loadingCities}
+            disabled={!selectedState || loadingCities}
           >
-            <InputLabel>City</InputLabel>
+            <InputLabel id="city-label">
+              City
+            </InputLabel>
 
             <Select
+              labelId="city-label"
               value={selectedCity}
               label="City"
-              onChange={(e) => setSelectedCity(e.target.value)}
+              onChange={(event) =>
+                setSelectedCity(event.target.value)
+              }
               input={
-                <OutlinedInput 
+                <OutlinedInput
+                  label="City"
                   startAdornment={
                     <InputAdornment position="start">
                       <LocationOnOutlinedIcon color="action" />
                     </InputAdornment>
                   }
-                label="City"/>
+                />
               }
             >
-              {loading ?(
-                <MenuItem disabled>Loading...</MenuItem>
-              ):(
-                cities.map((city) => (
-                <MenuItem key={city} value={city}>
-                  {city}
+              {loadingCities ? (
+                <MenuItem disabled>
+                  Loading...
                 </MenuItem>
-              ))
+              ) : cities.length > 0 ? (
+                cities.map((city) => (
+                  <MenuItem key={city} value={city}>
+                    {city}
+                  </MenuItem>
+                ))
+              ) : (
+                <MenuItem disabled>
+                  {selectedState
+                    ? "No cities available"
+                    : "Select a state first"}
+                </MenuItem>
               )}
             </Select>
           </FormControl>
         </Box>
+
+        {/* =========================
+            SEARCH BUTTON
+        ========================= */}
+
         <Button
           id="searchBtn"
+          type="submit"
           variant="contained"
           size="large"
-          type="submit"
-
+          startIcon={<SearchIcon />}
           disabled={
             loadingCities ||
             !selectedState ||
             !selectedCity
           }
-          startIcon={<SearchIcon/>}
           sx={{
-            minWidth:{xs:"100%", md:160,lg:180},
+            minWidth: {
+              xs: "100%",
+              md: 160,
+              lg: 180,
+            },
+
             height: 56,
+
             borderRadius: 2,
+
             textTransform: "none",
+
             fontWeight: 600,
           }}
         >
           Search
         </Button>
       </Stack>
-  </Paper>
-</>
+    </Paper>
   );
 };
 

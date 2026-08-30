@@ -5,11 +5,13 @@ const  BASE_URL="https://meddata-backend.onrender.com";
 
 
 // ----------- get  states:::::
-//  export const getStates=async()=>{
+ export const getStates=async()=>{
 
-//     /*___________ USING  AXIOS __________________________ */
-//     // const response=await axios.get(`${BASE_URL}/states`);
-//     // return response.data;
+    /*___________ USING  AXIOS __________________________ */
+    const response=await axios.get(`${BASE_URL}/states`);
+    return response.data;
+ }
+
 
 
 // /**__________________USING ASNYC && AWAIT */
@@ -22,23 +24,23 @@ const  BASE_URL="https://meddata-backend.onrender.com";
 
 
 /*_____________USING  FETCH___________________________ */
-export const getStates=()=>{
-    const url=`${BASE_URL}/states`
-    return  fetch(url)
-        .then((res)=>{
-            if(!res.ok){
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            return res.json();
-        })
-        .then((data)=>{
-            return data;
-        })
-        .catch((err)=>{
-            console.error("Error Fatching  states mawa ::", err);
-        })
+// export const getStates=()=>{
+//     const url=`${BASE_URL}/states`
+//     return  fetch(url)
+//         .then((res)=>{
+//             if(!res.ok){
+//                 throw new Error(`HTTP error! status: ${res.status}`);
+//             }
+//             return res.json();
+//         })
+//         .then((data)=>{
+//             return data;
+//         })
+//         .catch((err)=>{
+//             console.error("Error Fatching  states mawa ::", err);
+//         })
 
-    }
+//     }
 
 
 // ----------- get  cities:::::

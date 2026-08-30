@@ -1,18 +1,57 @@
-// ______ Save Bookings ______
-export const saveBookings=(bookings)=>{
+const BOOKINGS_KEY = "bookings";
 
-    const oldBookings=JSON.parse(localStorage.getItem("bookings")) || [];
-    oldBookings.push(bookings);
+// =========================
+// SAVE BOOKING
+// =========================
 
-    localStorage.setItem(
-        "bookings",
-        JSON.stringify(oldBookings)
+export const saveBookings = (booking) => {
+  try {
+    const existingBookings = JSON.parse(
+      localStorage.getItem(BOOKINGS_KEY)
     );
 
-}
-// _____ Get Bookings ______
-export  const getBookings=()=>{
-    return JSON.parse(
-        localStorage.getItem("bookings")
-    )||[];
-}
+    const bookings = Array.isArray(existingBookings)
+      ? existingBookings
+      : [];
+
+    bookings.push(booking);
+
+    localStorage.setItem(
+      BOOKINGS_KEY,
+      JSON.stringify(bookings)
+    );
+
+    return booking;
+  } catch (error) {
+    console.error("Error saving booking:", error);
+    return null;
+  }
+};
+
+// =========================
+// GET BOOKINGS
+// =========================
+
+export const getBookings = () => {
+  try {
+    const bookings = JSON.parse(
+      localStorage.getItem(BOOKINGS_KEY)
+    );
+
+    return Array.isArray(bookings)
+      ? bookings
+      : [];
+  } catch (error) {
+    console.error("Error reading bookings:", error);
+
+    return [];
+  }
+};
+
+// =========================
+// CLEAR BOOKINGS
+// =========================
+
+export const clearBookings = () => {
+  localStorage.removeItem(BOOKINGS_KEY);
+};
