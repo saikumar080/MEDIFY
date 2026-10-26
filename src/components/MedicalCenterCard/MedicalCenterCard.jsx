@@ -108,60 +108,57 @@ const MedicalCenterCard = ({ center = {} }) => {
   // =========================
 
 const handleSlotClick = (time) => {
-    setSelectedSlot(time);
+  setSelectedSlot(time);
 
-    const booking = {
-      id: Date.now(),
+  const bookingDate =
+    selectedDay?.date ||
+    new Date().toISOString().slice(0, 10);
 
-      // =========================
-      // MEDICAL CENTER DETAILS
-      // =========================
+  const booking = {
+    id: Date.now(),
 
-      centerId:
-        center.id ||
-        center.centerId ||
-        center.hospitalId ||
-        null,
+    // Preserve original hospital data
+    ...center,
 
-      centerName,
-      centerAddress,
-      city: centerCity,
-      state: centerState,
-      description: centerDescription,
+    centerId:
+      center.id ||
+      center.centerId ||
+      center.hospitalId ||
+      null,
 
-      centerImage:
-        center.image ||
-        center["Image"] ||
-        center.hospitalImage ||
-        hospitalIcon,
+    centerName,
+    centerAddress,
+    city: centerCity,
+    state: centerState,
+    description: centerDescription,
 
-      // =========================
-      // APPOINTMENT DETAILS
-      // =========================
+    centerImage:
+      center.image ||
+      center.Image ||
+      center.hospitalImage ||
+      hospitalIcon,
 
-      day: selectedDay?.label || "",
-      date: selectedDay?.date || selectedDay?.label || "",
-      time,
+    // Support both booking data formats
+    "Hospital Name": centerName,
+    City: centerCity,
+    State: centerState,
+    "Hospital Type": centerDescription,
 
-      // =========================
-      // EXTRA DETAILS
-      // =========================
+    day: selectedDay?.label || "",
+    date: bookingDate,
+    time,
 
-      consultationFee: center.consultationFee || 500,
-      likes: center.likes ?? 5,
+    bookingDate,
+    bookingTime: time,
 
-      bookedAt: new Date().toISOString(),
-
-      // Keep original hospital data too
-      center,
-    };
-
-    console.log("BOOKING SAVED:", booking);
-
-    saveBookings(booking);
-
-    setToastOpen(true);
+    consultationFee: center.consultationFee || 500,
+    likes: center.likes ?? 5,
+    bookedAt: new Date().toISOString(),
   };
+
+  saveBookings(booking);
+  setToastOpen(true);
+};
 
   // =========================
   // SLOT ROW

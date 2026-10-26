@@ -18,7 +18,7 @@ const  BASE_URL="https://meddata-backend.onrender.com";
 //     // const  response= await fetch(`${BASE_URL}/states`)
 //     // console.log("Before  JSON::::::::",response);
 //     // const data=await response.json();
-//     // console.log("AFTER JSON::::::::::   ",data);
+//     // console.log("AFTER JSON::::::::::   ",data);sz
 //     // return data;
 // }
 
