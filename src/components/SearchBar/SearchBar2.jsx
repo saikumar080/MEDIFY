@@ -73,6 +73,8 @@ const SearchBar = ({ searchPage = false }) => {
       setLoadingCities(true);
 
       const data = await getCities(state);
+      console.log('Selected State:', state);
+      console.log('Cities API Response:', data);
       const cityData=Array.isArray(data) ? data : data?.cities || data?.data || [];
       const cityList=Array.isArray(cityData) ? cityData.map((city) =>{
         if(typeof city === "string") return city;
@@ -85,6 +87,7 @@ const SearchBar = ({ searchPage = false }) => {
         );
       })
       .filter(Boolean) : [];
+      console.log('Processed City List:', cityList);
       setCities(cityList);
     } catch (error) {
       console.error("Error fetching cities:", error);
@@ -240,6 +243,7 @@ const SearchBar = ({ searchPage = false }) => {
             </InputLabel>
 
             <Select
+            data-testid="city-select"
               labelId="city-label"
               value={selectedCity}
               label="City"
