@@ -13,39 +13,9 @@ const  BASE_URL="https://meddata-backend.onrender.com";
  }
 
 
-
-// /**__________________USING ASNYC && AWAIT */
-//     // const  response= await fetch(`${BASE_URL}/states`)
-//     // console.log("Before  JSON::::::::",response);
-//     // const data=await response.json();
-//     // console.log("AFTER JSON::::::::::   ",data);sz
-//     // return data;
-// }
-
-
-/*_____________USING  FETCH___________________________ */
-// export const getStates=()=>{
-//     const url=`${BASE_URL}/states`
-//     return  fetch(url)
-//         .then((res)=>{
-//             if(!res.ok){
-//                 throw new Error(`HTTP error! status: ${res.status}`);
-//             }
-//             return res.json();
-//         })
-//         .then((data)=>{
-//             return data;
-//         })
-//         .catch((err)=>{
-//             console.error("Error Fatching  states mawa ::", err);
-//         })
-
-//     }
-
-
 // ----------- get  cities:::::
 export const getCities=async(state)=>{
-    const response=await axios.get(`${BASE_URL}/cities/${state}`);
+    const response=await axios.get(`${BASE_URL}/cities/${encodeURIComponent(state)}`);
     return response.data;
 }
 // ----------- get  hospitals:::::

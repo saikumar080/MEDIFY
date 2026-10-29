@@ -59,9 +59,13 @@ const SearchBar = () => {
     try {
       setLoadingCities(true);
       const data = await getCities(state);
-      setCities(data);
+      const cityList=Array.isArray(data) ? data.map((city)=>
+        typeof city ==="string" ? city : city.city || city.name || city.city
+      ).filter(Boolean) :[];
+      setCities(cityList);
     } catch (err) {
-      console.log(err);
+      console.log("Failed to  fetch cities: ",err);
+      setCities([]);
     } finally {
       setLoadingCities(false);
     }
@@ -129,11 +133,11 @@ const SearchBar = () => {
             fullWidth
           disabled={!selectedState || loadingCities}
           >
-            <InputLabel>City</InputLabel>
+            <InputLabel id="city-label">City</InputLabel>
 
             <Select
+              labelId="city-label"
               value={selectedCity}
-              label="City"
               onChange={(e) => setSelectedCity(e.target.value)}
               input={
                 <OutlinedInput 
@@ -146,7 +150,7 @@ const SearchBar = () => {
               }
             >
               {loading ?(
-                <MenuItem disabled>Loading...</MenuItem>
+                <MenuItem disabled>Loading cities...</MenuItem>
               ):(
                 cities.map((city) => (
                 <MenuItem key={city} value={city} sx={{ fontSize: { xs: 12, sm: 13, md: 14 }, fontWeight: 500 }}>
