@@ -236,7 +236,7 @@ const SearchBar = ({ searchPage = false }) => {
         >
           <FormControl
             fullWidth
-            disabled={!selectedState || loadingCities}
+            disabled={!selectedState}
           >
             <InputLabel id="city-label">
               City
