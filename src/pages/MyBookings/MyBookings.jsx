@@ -46,26 +46,25 @@ const MyBookings = () => {
     const city = booking.city || booking["City"] || "";
     const state = booking.state || booking["State"] || "";
 
-    if (city && state) return `${city}, ${state}`;
-    return "Address not available";
+    return [city, state].filter(Boolean).join(", ") || "Address not available";
   };
 
   const getCenterDescription = (booking) =>
     booking.description || booking["Hospital Type"] || "";
 
   const getBookingDate = (booking) =>
-    booking.date ||
+    booking.bookingDate ||
     booking.appointmentDate ||
     booking.selectedDate ||
-    booking.bookingDate ||
+    booking.date ||
     booking.day ||
     "";
 
   const getBookingTime = (booking) =>
-    booking.time ||
+    booking.bookingTime ||
     booking.appointmentTime ||
     booking.selectedTime ||
-    booking.bookingTime ||
+    booking.time ||
     "";
 
   const getCenterImage = (booking) =>
