@@ -115,10 +115,11 @@ const SearchResults = () => {
             fontSize: { xs: 24, md: 32 },
             fontWeight: 700,
             mb: 1,
-          }}
-        >
-          {centers.length} medical centers available in {" "} {String(city || "").toLowerCase()}
-        </Typography>
+       }}
+   >
+        {centers.length} medical centers available in{" "}
+        {String(city || "").trim().toLowerCase()}
+      </Typography>
 
         <Stack
           direction="row"
