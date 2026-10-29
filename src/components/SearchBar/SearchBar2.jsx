@@ -73,8 +73,19 @@ const SearchBar = ({ searchPage = false }) => {
       setLoadingCities(true);
 
       const data = await getCities(state);
-
-      setCities(Array.isArray(data) ? data : []);
+      const cityData=Array.isArray(data) ? data : data?.cities || data?.data || [];
+      const cityList=Array.isArray(cityData) ? cityData.map((city) =>{
+        if(typeof city === "string") return city;
+        return(
+          city?.City ||
+          city?.city ||
+          city?.name ||
+          city?.Name ||
+          ""
+        );
+      })
+      .filter(Boolean) : [];
+      setCities(cityList);
     } catch (error) {
       console.error("Error fetching cities:", error);
       setCities([]);

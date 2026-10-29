@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import SearchBar from "../SearchBar/SearchBar";
+import SearchBar from "../SearchBar/SearchBar2";
 import doctorImage from "../../assests/images/NicePng_doctor-png_336282 1.png";
 
 const HeroSection = () => {
