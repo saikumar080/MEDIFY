@@ -50,8 +50,8 @@ export const getCities=async(state)=>{
 }
 // ----------- get  hospitals:::::
 export const getHospitals=async(state,city)=>{
-    const response=await axios.get(
-        `${BASE_URL}/data?state=${state}&city=${city}`
+    const params= new URLSearchParams({state,city});
+    const response=await  axios.get( `${BASE_URL}/data?${params.toString()}`
     );
     return response.data;
 }

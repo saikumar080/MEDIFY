@@ -38,7 +38,7 @@ const SearchResults = () => {
 
         console.log("HOSPITAL API RESPONSE:", data);
 
-        setCenters(data);
+        setCenters(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error("Error Fetching Hospitals:", err);
         setError("Unable to fetch medical centers.");
@@ -117,7 +117,7 @@ const SearchResults = () => {
             mb: 1,
           }}
         >
-          {centers.length} medical centers available in {city}
+          {centers.length} medical centers available in {" "} {String(city || "").toLowerCase()}
         </Typography>
 
         <Stack
@@ -155,7 +155,7 @@ const SearchResults = () => {
               <Stack spacing={2}>
                 {centers.map((center, index) => (
                   <MedicalCenterCard
-                    key={center.id || index}
+                    key={center.id || center['Hospital Name'] || center.centername || index}
                     center={center}
                   />
                 ))}

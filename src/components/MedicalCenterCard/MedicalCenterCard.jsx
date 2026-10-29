@@ -68,6 +68,7 @@ const MedicalCenterCard = ({ center = {} }) => {
   // and what gets saved into the booking record.
   const centerName =
     center["Hospital Name"] ||
+    center.centername ||
     center.name ||
     center.hospitalName ||
     "Medical Center";
